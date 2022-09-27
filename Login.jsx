@@ -11,40 +11,51 @@ class entry {
     #Valid        = Boolean()
 
     constructor(UserInput){
-        this.#UserInput = UserInput
-        this.#NumOfChars = String(UserInput).length
+        //this.#UserInput = UserInput
+        this.#NumOfChars   = String(UserInput).length                  
+        this.#NumOfCaps    = this.NumOfCaps(UserInput)
+        this.#NumOfLowers  = this.NumOfLowers(UserInput)
+        this.#NumOfNumbers = this.NumOfNumbers(UserInput)
+        this.#NumOfSymbols = this.NumOfSymbols(UserInput)
     }
 
-    testmethod() {console.log(this.NumOfLowers(this.#UserInput))}
+    testmethod() {let i = 'á'; let a = 'a'; let z = 'z';console.log((a <= i) && (i <= z))}
     
-    testmethod2(){console.log('test')}
-
-    NumOfLowers(str) {return NumOfLowers(str)} //attempt to internally make function a method for entry (composition)
+    //testmethod2(){console.log('test')}
+    
+    //attempt to internally make function a method for entry (composition)
+    NumOfNumbers(str) {return NumOfAType(str,'N')}
+    NumOfSymbols(str) {return NumOfAType(str,'S')}
+    NumOfLowers(str) {return NumOfAType(str,'L')}
+    NumOfCaps(str) {return NumOfAType(str,'U')}
 }
 
-class UserEntry {
+function NumOfAType(str, Type) {
+    
+    if (!(Type === 'S')){
+        let a
+        let z
+        if (Type === 'L'){a = 'a'; z ='z'}
+        else
+        if (Type === 'U'){a = 'A'; z = 'Z'}
+        else
+        if (Type === 'N'){a = '0'; z = '9'}
 
-}
-
-class PasswordEntry {
-
-}
-
-function NumOfLowers(str) {
-    n = 0
-    for (let eachletter in String(str)){
-        e = str[eachletter]
-        if (("a" <= e) && (e <= "z")) {n++} 
+        n = 0
+        for (let eachletter in String(str)){
+            e = str[eachletter]
+            
+            if ((a <= e) && (e <= z)) {n++} 
+        }
+        return n
     }
-
-    return n
-}
-
-function checkValid(MinNumOfChars   =  Number(), MaxNumOfChars   = Number(),
-                    MinNumOfLowers  =     0    , MinNumOfCaps    =    0    ,
-                    MinNumOfNumbers =     0    , MinNumOfSymbols =    0    ) {
-
-    
+    else //any char that isn't a standard letter or number is treated as a symbol
+    //if (Type === 'S') //line redundant
+        {return (String(str).length - 
+            (NumOfAType(str, 'L') + 
+             NumOfAType(str, 'U') + 
+             NumOfAType(str, 'N'))
+       )}
 }
 
 function checkNumOfChars(min, value, max){
@@ -55,19 +66,26 @@ function checkNumOfChars(min, value, max){
         {return false}
 }
 
+function checkValid(MinNumOfChars   =  Number(), MaxNumOfChars   = Number(),
+                    MinNumOfLowers  =     0    , MinNumOfCaps    =    0    ,
+                    MinNumOfNumbers =     0    , MinNumOfSymbols =    0    ) {
 
-E = new entry('b1an')
+    
+}
+
+class UserEntry {
+
+}
+
+class PasswordEntry {
+
+}
+
+
+
+
+E = new entry('b1An')
 E.testmethod()
-
-
-
-
-
-
-
-
-
-
 
 /*Credits:
 https://stackoverflow.com/questions/40120915/javascript-function-that-returns-true-if-a-letter
